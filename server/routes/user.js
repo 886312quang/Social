@@ -20,4 +20,9 @@ router.route("/updateAvatar").post(AuthMiddleware.isAuth, user.updateAvatar);
 
 router.route("/iceServerList").get(AuthMiddleware.isAuth, user.iceServersList);
 
+//follow a user
+router.route("/follow/:id").get(AuthMiddleware.isAuth, user.follow);
+//unfollow a user
+router.route("/unfollow/:id").get(AuthMiddleware.isAuth, user.unfollow);
+
 module.exports = router;

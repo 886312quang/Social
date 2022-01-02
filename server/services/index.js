@@ -5,6 +5,7 @@ const notificationServices = require("./notificationService");
 const messageServices = require("./messageServices");
 const groupServices = require("./groupServices");
 const groupsServices = require("./groupsServices");
+const postServices = require("./postService");
 
 module.exports = {
   auth: authServices,
@@ -14,4 +15,5 @@ module.exports = {
   message: messageServices,
   group: groupServices,
   groups: groupsServices,
+  post: postServices,
 };

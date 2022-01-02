@@ -41,7 +41,7 @@ let updatePassword = async (req, res) => {
   try {
     let updateUserItem = req.body;
     await user.updatePassword(req.user._id, updateUserItem);
-    
+
     let result = {
       message: transSuccess.updatedPassword,
     };
@@ -179,6 +179,44 @@ let iceServersList = async (req, res) => {
   }
 };
 
+let follow = async (req, res) => {
+  try {
+    if (req.user._id !== req.params.id) {
+      const user = await UserModel.findById(req.params.id);
+      const currentUser = await UserModel.findById(req.user._id);
+
+      if (!user.followers.includes(req.user._id)) {
+        await user.updateOne({ $push: { followers: req.user._id } });
+        await currentUser.updateOne({ $push: { followings: req.user._id } });
+        res.status(200).json("User has been followed");
+      } else {
+        res.status(403).json("You allready follow this user");
+      }
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+let unfollow = async (req, res) => {
+  try {
+    if (req.user._id !== req.params.id) {
+      const user = await UserModel.findById(req.params.id);
+      const currentUser = await UserModel.findById(req.user._id);
+
+      if (user.followers.includes(req.user._id)) {
+        await user.updateOne({ $pull: { followers: req.user._id } });
+        await currentUser.updateOne({ $pull: { followings: req.user._id } });
+        res.status(200).json("User has been unfollowed");
+      } else {
+        res.status(403).json("You allready unfollow this user");
+      }
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
   getCurrentUser,
   load,
@@ -186,4 +224,6 @@ module.exports = {
   updateInfo,
   updateAvatar,
   iceServersList,
+  follow,
+  unfollow,
 };

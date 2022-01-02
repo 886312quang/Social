@@ -219,22 +219,6 @@ ContactSchema.statics = {
       { updatedAt: Date.now() },
     ).exec();
   },
-
-  /**
-   * block user by userId.
-   * @param {*} userId
-   */
-  blockByUserId(userId) {
-    return  this.update(
-      {
-        $or: [
-          { $and: [{ userId: userId }, { contactId: contactId }] },
-          { $and: [{ userId: contactId }, { contactId: userId }] },
-        ],
-      },
-      { block: !block },
-    ).exec();
-  },
 };
 
 module.exports = mongoose.model("contact", ContactSchema);

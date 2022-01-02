@@ -131,7 +131,7 @@ const Post_CONTENT = {
 };
 
 module.exports = {
-  model: mongoose.model("Post", PostSchema),
+  model: mongoose.model("post", PostSchema),
   types: Post_TYPES,
   contents: Post_CONTENT,
 };

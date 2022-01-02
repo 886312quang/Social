@@ -89,13 +89,9 @@ let login = async (req, res) => {
 
             tokenList[refreshToken] = { accessToken, refreshToken };
 
-            token = {
-              accessToken,
-              refreshToken,
-            };
 
             return res.status(200).json({
-              token,
+              tokenList,
               exp: expToken.exp,
               iat: expToken.iat,
               user: userData,

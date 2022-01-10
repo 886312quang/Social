@@ -1,6 +1,6 @@
 const transValidation = {
   email_incorrect: "Email có dạng example@gmail.com",
-  gender_incorrect: "????????????????????????????@@.",
+  gender_incorrect: "Chọn sai giới tính",
   password_incorrect:
     "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ thường chữ hoa và kí tự.",
   password_confirmation_incorrect: "Nhập lại mật khẩu không chính xác.",

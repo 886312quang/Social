@@ -1,6 +1,6 @@
 import getSocket from "./rootSocket";
-import message from "../components/Shared/message";
-import playBell from "../components/Shared/sound/bell";
+import notify from "../components/notifications/notifications";
+import playBell from "../sound/bell";
 import * as constant from "../constants/contact";
 import getStore from "../configs/configureStore";
 
@@ -12,7 +12,7 @@ export const emitAddContact = (payload) => {
 
 export const onAddContact = (payload) => {
   playBell("notification");
-  message.info(payload);
+  notify.info(payload);
   getStore().dispatch({ type: constant.ON_CONTACT_REQUEST_ADD, payload });
 };
 
@@ -23,7 +23,7 @@ export const emitAcceptRequestContact = (payload) => {
 export const onAcceptRequestContact = (payload) => {
   playBell("notification");
   getStore().dispatch({ type: constant.ON_ACCEPT_REQUEST_ADD, payload });
-  message.info(payload);
+  notify.info(payload);
 };
 
 export const emitRemoveRequestContact = (payload) => {

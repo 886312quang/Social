@@ -2,7 +2,7 @@ import getSocket from "./rootSocket";
 import constants from "../constants/call";
 import getStore from "../configs/configureStore";
 import { toast } from "react-toastify";
-import { Modal } from "antd";
+import notify from "../components/notifications/notifications";
 
 let peer = null;
 
@@ -120,10 +120,7 @@ export const onListenerAnswerCall = (payload) => {
     }
   } catch (error) {
     console.log("Failed to get local stream", error);
-    Modal.error({
-      title: "Error",
-      content: error.toString(),
-    });
+    notify.error(error);
   }
 };
 
@@ -169,12 +166,12 @@ export const onCallerAnswerCall = (payload) => {
         type: constants.CALL_CLEAR,
         payload: payload,
       });
-      Modal.error({ title: "Error", content: "Không thể thực hiện cuộc gọi!" });
+      notify.error("Không thể thực hiện cuộc gọi!");
       emitCallEnded({ id: payload.listener.id });
     }
   } catch (error) {
     console.log("Failed to get local stream", error);
-    Modal.error({ title: "Error", content: error.toString() });
+    notify.error(error);
   }
 };
 
@@ -190,7 +187,7 @@ export const emitAnswerCall = (payload) => {
 
 //On event 1 or 2 cancel
 export const onCallEnded = () => {
-  Modal.info({ content: "Call ended" });
+  notify.info("Call ended");
   getStore().dispatch({
     type: constants.CALL_CALL_ENDED,
   });

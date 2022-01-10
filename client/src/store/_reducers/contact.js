@@ -1,4 +1,4 @@
-import * as constants from "../constants/contact";
+import * as constants from "../../constants/contact";
 import produce from "immer";
 
 const initialState = {

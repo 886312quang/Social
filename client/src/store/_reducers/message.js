@@ -1,8 +1,7 @@
-import constants from "../constants/message";
-import * as constantsContact from "../constants/contact";
+import constants from "../../constants/message";
+import * as constantsContact from "../../constants/contact";
 import produce from "immer";
-import playBell from "../components/Shared/sound/bell";
-import message from "../constants/message";
+import playBell from "../../sound/bell";
 
 const initialState = {
   initLoading: true,

@@ -1,8 +1,8 @@
 import * as constants from "../constants/contact";
 import * as userConstants from "../constants/user";
-import Errors from "../components/Shared/error/errors";
+import Errors from "../../views/dashboard/errors/error404";
 import services from "../services/contact";
-import Message from "../components/Shared/message";
+
 import {
   emitAddContact,
   emitAcceptRequestContact,
@@ -63,7 +63,6 @@ const actions = {
         payload: response.data,
       });
     } catch (error) {
-      Message.error("Error find user!");
       dispatch({ type: userConstants.USER_GET_ERROR });
     }
   },
@@ -79,9 +78,7 @@ const actions = {
         type: constants.CONTACT_CREATE_SUCCESS,
         payload: response.data,
       });
-      Message.success("Add friend success");
     } catch (error) {
-      Message.error("Add friend fail");
       dispatch({
         type: userConstants.USER_ADD_CONTACT_ERROR,
       });
@@ -98,7 +95,6 @@ const actions = {
         payload: response.data,
       });
     } catch (error) {
-      Message.error("Error");
       dispatch({
         type: constants.CONTACT_REMOVE_SENT_ERROR,
       });
@@ -117,7 +113,6 @@ const actions = {
         payload: response.data,
       });
     } catch (error) {
-      Message.error("Error");
       dispatch({
         type: constants.CONTACT_REMOVE_REQUEST_ERROR,
       });
@@ -136,7 +131,6 @@ const actions = {
         payload: id,
       });
     } catch (error) {
-      Message.error("Error");
       dispatch({
         type: constants.CONTACT_REMOVE_CONTACT_ERROR,
       });
@@ -160,7 +154,6 @@ const actions = {
         payload: data,
       });
     } catch (error) {
-      Message.error("Error");
       dispatch({
         type: constants.ACCEPT_CONTACT_ERROR,
       });

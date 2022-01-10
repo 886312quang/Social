@@ -6,6 +6,7 @@ import user from "./user";
 import message from "./message";
 import contact from "./contact";
 import call from "./call";
+import mode from "./mode";
 
 export default (history) =>
   combineReducers({
@@ -16,4 +17,5 @@ export default (history) =>
     user,
     message,
     call,
+    mode,
   });

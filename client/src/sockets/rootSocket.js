@@ -12,7 +12,7 @@ import {
   onNewUserOnline,
   onNewUserOffline,
 } from "./checkStatus";
-import { isAuthenticated } from "../components/Shared/Routes/permissionChecker";
+import { isAuthenticated } from "../router/permissionChecker";
 import {
   onSentMessage,
   onTypingOn,

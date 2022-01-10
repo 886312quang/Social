@@ -46,3 +46,18 @@ export const fetchRefreshToken = async (data) => {
   });
   return response;
 };
+
+export const getVerify2FA = async () => {
+  const response = await api.get("/auth/2FA");
+  return response;
+};
+
+export const postEnable2FA = async () => {
+  const response = await api.get("/auth/enable-2fa");
+  return response;
+};
+
+export const postVerify2FA = async (data) => {
+  const response = await api.post("/auth/verify-2fa", data);
+  return response;
+};

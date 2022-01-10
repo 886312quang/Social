@@ -1,4 +1,4 @@
-import * as constants from "../constants/layout";
+import * as constants from "../../constants/layout";
 import produce from "immer";
 
 const initialState = {

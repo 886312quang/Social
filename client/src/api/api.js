@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isAuthenticated } from "../components/Shared/Routes/permissionChecker";
+import { isAuthenticated } from "../router/permissionChecker";
 
 const api = axios.create({
   baseURL: "http://localhost:5000/api",

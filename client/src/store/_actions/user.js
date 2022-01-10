@@ -1,10 +1,10 @@
-import * as constants from "../constants/user";
-import Message from "../components/Shared/message";
-import Errors from "../components/Shared/error/errors";
-import services from "../services/user";
+import * as constants from "../../constants/user";
+import notify from "../../components/notifications/notifications";
+import Errors from "../../helpers/errors";
+import services from "../../services/user";
 import Swal from "sweetalert2";
-import { getHistory } from "../configs/configureStore";
-import { socketDisconnect } from "../sockets/rootSocket";
+import { getHistory } from "../../configs/configureStore";
+import { socketDisconnect } from "../../sockets/rootSocket";
 
 const actions = {
   getCurrentUser: () => async (dispatch) => {
@@ -79,7 +79,7 @@ const actions = {
         dispatch({ type: "RESET" });
       });
     } catch (error) {
-      Message.error("Change password fail!");
+      notify.error("Change password fail!");
       dispatch({
         type: constants.USER_UPDATE_PASSWORD_ERROR,
       });
@@ -109,9 +109,9 @@ const actions = {
         payload: userInfoNow,
       });
 
-      Message.success("Update user info success!");
+      notify.success("Update user info success!");
     } catch (error) {
-      Message.error("Update user info fail!");
+      notify.error("Update user info fail!");
       dispatch({
         type: constants.USER_UPDATE_ERROR,
       });

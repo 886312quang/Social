@@ -1,5 +1,5 @@
-import * as constants from "../constants/user";
-import * as constantsContact from "../constants/contact";
+import * as constants from "../../constants/user";
+import * as constantsContact from "../../constants/contact";
 import produce from "immer";
 
 const initialState = {

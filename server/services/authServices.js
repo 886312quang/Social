@@ -7,7 +7,7 @@ const emailProvider = require("../services/emails/emailProvider");
 
 let saltRounds = 7;
 
-let register = (email, gender, password, protocol, host) => {
+let register = (fullname, email, gender, password, protocol, host) => {
   return new Promise(async (resolve, reject) => {
     let userByEmail = await UserModel.findByEmail(email);
     if (userByEmail) {
@@ -21,7 +21,7 @@ let register = (email, gender, password, protocol, host) => {
     }
     let salt = bcrypt.genSaltSync(saltRounds);
     let userItem = {
-      userName: email.split("@")[0],
+      userName: fullname,
       gender: gender,
       local: {
         email: email,

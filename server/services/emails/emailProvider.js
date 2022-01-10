@@ -55,7 +55,7 @@ exports.sendPasswordChangeEmail = async (user) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: "quanlyahoochat8888@gmail.com",
+      from: "quanlyahoochat7777@gmail.com",
     },
     // uncomment below to send emails in development/test env:
     send: true,
@@ -76,7 +76,6 @@ exports.sendPasswordChangeEmail = async (user) => {
     .catch((error) => {
       console.log("error sending change password email");
       console.log(error);
-      return res.status(500).json({ message: error });
     });
 };
 

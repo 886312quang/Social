@@ -1,4 +1,4 @@
-import * as constants from "../constants/auth";
+import * as constants from "../../constants/auth";
 import produce from "immer";
 
 const initialState = {
@@ -16,6 +16,9 @@ const initialState = {
   verifyEmailError: null,
   userInfo: null,
   token: null,
+  enable2FA: false,
+  verify2FA: false,
+  QR2FA: null,
 };
 
 const authReducer = (state = initialState, { type, payload }) =>
@@ -31,8 +34,10 @@ const authReducer = (state = initialState, { type, payload }) =>
       case constants.SIGNIN_SUCCESS:
         draft.signinLoading = false;
         draft.signinSuccess = payload.message;
-        draft.token = payload.token;
+        draft.token = payload.refreshToken;
         draft.signinError = null;
+        draft.enable2FA = payload.enable2FA;
+        draft.verify2FA = payload.verify2FA;
         break;
       case constants.SIGNIN_ERROR:
         draft.signinLoading = false;
@@ -86,12 +91,33 @@ const authReducer = (state = initialState, { type, payload }) =>
         break;
       case constants.UPDATE_INFO:
         draft.userInfo = payload.user;
-        draft.token = payload.token.accessToken;
+        draft.token = payload.accessToken;
         break;
       case constants.ERROR_MESSAGE_CLEAR:
         draft.signupError = null;
         draft.signinError = null;
         draft.signinSuccess = null;
+        break;
+      case constants.VERIFY_2FA:
+        draft.enable2FA = false;
+        draft.verify2FA = false;
+        break;
+      case constants.VERIFY_2FA_SUCCESS:
+        draft.enable2FA = true;
+        draft.verify2FA = payload.verify2FA;
+        break;
+      case constants.ENABLE_2FA:
+        draft.QR2FA = null;
+        break;
+      case constants.ENABLE_2FA_SUCCESS:
+        draft.QR2FA = payload;
+        break;
+      case constants.ENABLE_2FA_ERROR:
+        draft.QR2FA = null;
+        break;
+      case constants.POST_VERIFY_2FA_SUCCESS:
+        draft.QR2FA = null;
+        draft.verify2FA = payload;
         break;
       default:
         break;

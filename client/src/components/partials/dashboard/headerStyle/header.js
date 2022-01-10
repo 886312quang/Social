@@ -1,6 +1,10 @@
 import React from 'react'
 import { Navbar, Dropdown, Nav, Form, Card, Image} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import actions from "../../../../store/_actions/auth";
+import selectors from "../../../../store/_selectors/auth";
+import * as constants from "../../../../constants/auth";
 
 //image
 import logo from '../../../../assets/images/logo.png'
@@ -12,9 +16,13 @@ import user5 from '../../../../assets/images/user/05.jpg'
 import Button from '@restart/ui/esm/Button'
 
 const Header = () => {
-    
+    const dispatch = useDispatch();
     const minisidebar =() =>{
         document.body.classList.toggle('sidebar-main')
+    }
+
+    const doSignout = () => {
+        dispatch(actions.doSignOut());
     }
 
     return (
@@ -345,7 +353,7 @@ const Header = () => {
                                                     </div>
                                                 </Link>
                                                 <div className="d-inline-block w-100 text-center p-3">
-                                                    <Link className="btn btn-primary iq-sign-btn" to="/auth/sign-in" role="button">Sign out
+                                                    <Link className="btn btn-primary iq-sign-btn" to="/auth/sign-in" role="button" onClick={doSignout}>Sign out
                                                         <i className="ri-login-box-line ms-2"></i>
                                                     </Link>
                                                 </div>

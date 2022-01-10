@@ -13,6 +13,9 @@ let UserSchema = new Schema({
   avatar: { type: String, default: "avatar-default.jpg" },
   coverPic: { type: String, default: "avatar-default.jpg" },
   role: { type: String, default: "user" },
+  enable2FA: { type: Boolean, default: false },
+  verify2FA: { type: Boolean, default: false },
+  secretKey: { type: String, default: null },
   local: {
     email: { type: String, trim: true },
     password: String,
@@ -29,16 +32,20 @@ let UserSchema = new Schema({
     token: String,
     email: { type: String, trim: true },
   },
-  followers: [{
-    userId: String,
-    createdAt: { type: Number, default: Date.now },
-    updatedAt: { type: Number, default: Date.now },
-  }],
-  followings: [{
-    userId: String,
-    createdAt: { type: Number, default: Date.now },
-    updatedAt: { type: Number, default: Date.now },
-  }],
+  followers: [
+    {
+      userId: String,
+      createdAt: { type: Number, default: Date.now },
+      updatedAt: { type: Number, default: Date.now },
+    },
+  ],
+  followings: [
+    {
+      userId: String,
+      createdAt: { type: Number, default: Date.now },
+      updatedAt: { type: Number, default: Date.now },
+    },
+  ],
   previewer: [{ userId: String }],
   createdAt: { type: Number, default: Date.now },
   updatedAt: { type: Number, default: Date.now },
@@ -84,7 +91,7 @@ UserSchema.statics = {
   verify(token) {
     return this.findOneAndUpdate(
       { "local.verifyToken": token },
-      { "local.isActive": true, "local.verifyToken": null },
+      { "local.isActive": true, "local.verifyToken": null }
     );
   },
   findUserByIdToUpdatePassword(id) {
@@ -126,7 +133,7 @@ UserSchema.statics = {
           },
         ],
       },
-      { _id: 1, userName: 1, address: 1, avatar: 1 },
+      { _id: 1, userName: 1, address: 1, avatar: 1 }
     ).exec();
   },
   findAllToAddGroup(friendId, keyword) {
@@ -145,7 +152,7 @@ UserSchema.statics = {
           },
         ],
       },
-      { _id: 1, userName: 1, address: 1, avatar: 1 },
+      { _id: 1, userName: 1, address: 1, avatar: 1 }
     ).exec();
   },
   getNormalUserDataById(id) {
@@ -155,6 +162,12 @@ UserSchema.statics = {
       address: 1,
       avatar: 1,
       phone: 1,
+    }).exec();
+  },
+  get2FA(id) {
+    return this.findById(id, {
+      enable2FA: 1,
+      verify2FA: 1,
     }).exec();
   },
   async login(data) {

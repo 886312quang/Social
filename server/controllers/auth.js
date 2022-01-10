@@ -7,6 +7,12 @@ const PasswordResetToken = require("../models/passwordResetModel");
 const emailProvider = require("../services/emails/emailProvider");
 const moment = require("moment");
 const bcrypt = require("bcrypt");
+const {
+  generateUniqueSecret,
+  verifyOTPToken,
+  generateOTPToken,
+  generateQRCode,
+} = require("../helpers/2fa.js");
 
 const tokenList = [];
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "24h";
@@ -31,22 +37,24 @@ let register = async (req, res) => {
   }
   try {
     let createUserSuccess = await auth.register(
+      req.body.fullname,
       req.body.email,
       req.body.gender,
       req.body.password,
       req.body.userName,
       req.protocol,
-      req.get("host"),
+      req.get("host")
     );
     successArr.push(createUserSuccess);
     return res.status(200).json({ success: true, message: successArr });
   } catch (error) {
-    return res.status(500).json();
+    return res.status(200).json({ success: false, message: error });
   }
 };
 
 let login = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await UserModel.findByEmail(email);
 
@@ -70,28 +78,37 @@ let login = async (req, res) => {
               avatar: user.avatar,
             };
 
+            if (user.enable2FA) {
+              const verify2FA = {
+                verify2FA: false,
+              };
+              await user.updateOne(verify2FA);
+            }
+
             // Token
             const accessToken = await jwtHelper.generateToken(
               userData,
               accessTokenSecret,
-              accessTokenLife,
+              accessTokenLife
             );
             const refreshToken = await jwtHelper.generateToken(
               userData,
               refreshTokenSecret,
-              refreshTokenLife,
+              refreshTokenLife
             );
 
             const expToken = await jwtHelper.verifyToken(
               accessToken,
-              accessTokenSecret,
+              accessTokenSecret
             );
 
             tokenList[refreshToken] = { accessToken, refreshToken };
 
-
             return res.status(200).json({
-              tokenList,
+              accessToken,
+              refreshToken,
+              enable2FA: user.enable2FA,
+              verify2FA: false,
               exp: expToken.exp,
               iat: expToken.iat,
               user: userData,
@@ -153,8 +170,6 @@ let sendResetPassword = async (req, res, next) => {
 let resetPassword = async (req, res, next) => {
   try {
     const { email, password, resetToken } = req.body;
-    console.log(email);
-    console.log(resetToken);
 
     const resetTokenObject = await PasswordResetToken.findOneAndRemove({
       userEmail: email,
@@ -209,25 +224,38 @@ let refreshToken = async (req, res) => {
     try {
       const decoded = await jwtHelper.verifyToken(
         refreshTokenFromClient,
-        refreshTokenSecret,
+        refreshTokenSecret
       );
+
+      tokenList.filter((token) => token !== refreshTokenFromClient);
 
       const userData = decoded.data;
 
       const accessToken = await jwtHelper.generateToken(
         userData,
         accessTokenSecret,
-        accessTokenLife,
+        accessTokenLife
+      );
+
+      const refreshToken = await jwtHelper.generateToken(
+        userData,
+        refreshTokenSecret,
+        refreshTokenLife
       );
 
       const expToken = await jwtHelper.verifyToken(
         accessToken,
-        accessTokenSecret,
+        accessTokenSecret
       );
 
-      return res
-        .status(200)
-        .json({ accessToken, exp: expToken.exp, iat: expToken.iat });
+      tokenList[refreshToken] = { accessToken, refreshToken };
+
+      return res.status(200).json({
+        accessToken,
+        refreshToken,
+        exp: expToken.exp,
+        iat: expToken.iat,
+      });
     } catch (error) {
       res.status(403).json({
         message: "Invalid refresh token.",
@@ -240,6 +268,49 @@ let refreshToken = async (req, res) => {
   }
 };
 
+const postEnable2FA = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.user._id);
+    const serviceName = "mqsocial.com";
+    // Thực hiện tạo mã OTP
+    const otpAuth = generateOTPToken(user.userName, serviceName, user.secretKey);
+
+    const QRCodeImage = await generateQRCode(otpAuth);
+    
+    return res.status(200).json({ QRCodeImage });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+const postVerify2FA = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.user._id);
+    const { otpToken } = req.body;
+    // Kiểm tra mã token người dùng truyền lên có hợp lệ hay không?
+    const isValid = verifyOTPToken(otpToken, user.secretKey);
+    /** Sau bước này nếu verify thành công thì thực tế chúng ta sẽ redirect qua trang đăng nhập thành công,
+    còn hiện tại demo thì mình sẽ trả về client là đã verify success hoặc fail */
+    if (isValid) {
+      if (user.enable2FA) {
+        const verify2FA = {
+          verify2FA: true,
+        };
+        await user.updateOne(verify2FA);
+      }
+    }
+    return res.status(200).json({ isValid });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json(error);
+  }
+};
+
+let get2FA = async (req, res) => {
+  const user = await UserModel.get2FA(req.user._id);
+
+  return res.status(200).json(user);
+};
+
 module.exports = {
   register,
   login,
@@ -247,4 +318,7 @@ module.exports = {
   sendResetPassword,
   resetPassword,
   refreshToken,
+  postEnable2FA,
+  postVerify2FA,
+  get2FA,
 };

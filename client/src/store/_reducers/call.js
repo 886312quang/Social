@@ -1,6 +1,6 @@
-import constants from "../constants/call";
+import constants from "../../constants/call";
 import produce from "immer";
-import playBell from "../components/Shared/sound/bell";
+import playBell from "../../sound/bell";
 
 const initialState = {
   caller: {},

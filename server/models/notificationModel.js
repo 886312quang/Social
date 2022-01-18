@@ -6,6 +6,7 @@ let NotificationSchema = new Schema({
   senderId: String,
   receiverId: String,
   type: String,
+  link: String,
   isRead: { type: Boolean, default: false },
   createdAt: { type: Number, default: Date.now },
   updatedAt: { type: Number, default: Date.now },
@@ -68,10 +69,18 @@ NotificationSchema.statics = {
         //$in gia tri co nam trong mang || nin not in nhung thang k nam trong mang
         $and: [{ receiverId: userId }, { senderId: { $in: targetUsers } }],
       },
-      { isRead: true },
+      { isRead: true }
     )
       .limit(10)
       .exec();
+  },
+
+  /**
+   *
+   * @param {string} id
+   */
+  markNotify(id) {
+    return this.findByIdAndUpdate(id, { isRead: true }).exec();
   },
 };
 
@@ -82,94 +91,67 @@ const NOTIFICATION_TYPES = {
   COMMENT_POST: "comment_post",
 };
 const NOTIFICATION_CONTENT = {
-  getContent: (notificationType, isRead, userId, userName, avatar) => {
+  getContent: (
+    _id,
+    notificationType,
+    isRead,
+    userId,
+    userName,
+    avatar,
+    createdAt,
+    link
+  ) => {
     if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
-      if (!isRead) {
-        return `
-         <div class="notify-read-false" data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> đã gửi lời mời kết bạn với
-          bạn! </div>`;
-      }
-      return `
-         <div data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> đã gửi lời mời kết bạn với
-          bạn! </div>`;
+      return {
+        id: _id,
+        userId: userId,
+        avatar: avatar,
+        userName: userName,
+        content: "đã gửi lời mời kết bạn với bạn.",
+        createdAt: createdAt,
+        isRead: isRead,
+        link: `friend-profile/${link}`,
+        type: NOTIFICATION_TYPES.ADD_CONTACT,
+      };
     }
     if (notificationType === NOTIFICATION_TYPES.ACCEPT_CONTACT) {
-      if (!isRead) {
-        return `
-         <div class="notify-read-false" data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã chấp nhận lời mời kết bạn của bạn.
-         </div>`;
-      }
-      return `
-         <div data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã chấp nhận lời mời kết bạn của bạn.
-          </div>`;
+      return {
+        id: _id,
+        userId: userId,
+        avatar: avatar,
+        userName: userName,
+        content: "đã chấp nhận lời mời kết bạn của bạn.",
+        createdAt: createdAt,
+        isRead: isRead,
+        link: `friend-profile/${link}`,
+        type: NOTIFICATION_TYPES.ACCEPT_CONTACT,
+      };
     }
     if (notificationType === NOTIFICATION_TYPES.LIKES_POST) {
-      if (!isRead) {
-        return `
-         <div class="notify-read-false" data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã bày tỏ cảm xúc với bài đăng của bạn.
-         </div>`;
-      }
-      return `
-         <div data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã bày tỏ cảm xúc với bài đăng của bạn.
-          </div>`;
+      return {
+        id: _id,
+        userId: userId,
+        avatar: avatar,
+        userName: userName,
+        content: "đã bày tỏ cảm xúc với bài đăng của bạn.",
+        createdAt: createdAt,
+        isRead: isRead,
+        link: link,
+        type: NOTIFICATION_TYPES.LIKES_POST,
+      };
     }
     if (notificationType === NOTIFICATION_TYPES.COMMENT_POST) {
-      if (!isRead) {
-        return `
-         <div class="notify-read-false" data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã bình luận vào bài đăng của bạn.
-         </div>`;
-      }
-      return `
-         <div data-uid="${userId}">
-          <img
-            class="avatar-small"
-            src="images/users/${avatar}"
-            alt=""
-          />
-          <strong>${userName}</strong> Đã bình luận vào bài đăng của bạn.
-          </div>`;
+      return {
+        id: _id,
+        userId: userId,
+        avatar: avatar,
+        userName: userName,
+        content: "đã bình luận vào bài đăng của bạn.",
+        createdAt: createdAt,
+        isRead: isRead,
+        link: link,
+        type: NOTIFICATION_TYPES.COMMENT_POST,
+      };
     }
     return "No matching with any notification type.";
   },

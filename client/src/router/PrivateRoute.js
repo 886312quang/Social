@@ -1,6 +1,6 @@
 import { isAuthenticated } from "./permissionChecker";
 import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import userActions from "../store/_actions/user";
 import authActions from "../store/_actions/auth";
@@ -37,28 +37,30 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     }
   }, [enable2FA, verify2FA]);
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated() && !check2FA()  ? (
-          <Redirect
-            to={{
-              pathname:"/auth/2FA",
-              state: { from: props.location },
-            }}
-          />
-        ) : !isAuthenticated() ? (
-          <Redirect
-            to={{
-              pathname:  "/auth/sign-in",
-              state: { from: props.location },
-            }}
-          />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
+    <Switch>
+      <Route
+        {...rest}
+        render={(props) =>
+          isAuthenticated() && !check2FA() ? (
+            <Redirect
+              to={{
+                pathname: "/auth/2FA",
+                state: { from: props.location },
+              }}
+            />
+          ) : !isAuthenticated() ? (
+            <Redirect
+              to={{
+                pathname: "/auth/sign-in",
+                state: { from: props.location },
+              }}
+            />
+          ) : (
+            <Component {...props} />
+          )
+        }
+      />
+    </Switch>
   );
 };
 

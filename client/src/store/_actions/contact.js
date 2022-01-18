@@ -1,7 +1,7 @@
-import * as constants from "../constants/contact";
-import * as userConstants from "../constants/user";
-import Errors from "../../views/dashboard/errors/error404";
-import services from "../services/contact";
+import * as constants from "../../constants/contact";
+import * as userConstants from "../../constants/user";
+import Errors from "../../helpers/errors";
+import services from "../../services/contact";
 
 import {
   emitAddContact,
@@ -9,8 +9,8 @@ import {
   emitRemoveRequestContact,
   emitRemoveRequestSentContact,
   emitRemoveContact,
-} from "../sockets/contact";
-import { emitCheckStatus } from "../sockets/checkStatus";
+} from "../../sockets/contact";
+import { emitCheckStatus } from "../../sockets/checkStatus";
 
 const actions = {
   getContacts: () => async (dispatch) => {
@@ -72,11 +72,13 @@ const actions = {
 
       const response = await services.createContact(userInfo);
 
-      emitAddContact(response.data);
+      console.log(response);
+
+      emitAddContact(response.data.newContact);
 
       dispatch({
         type: constants.CONTACT_CREATE_SUCCESS,
-        payload: response.data,
+        payload: response.data.userContact,
       });
     } catch (error) {
       dispatch({

@@ -109,7 +109,6 @@
   "devDependencies": {
     "fslightbox-react": "^1.6.2-2",
     "nodemon": "^2.0.15",
-    "sortablejs": "^1.14.0",
-    "webpack": "^4.44.2"
+    "sortablejs": "^1.14.0"
   }
 }

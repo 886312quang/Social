@@ -1,24 +1,15 @@
 const privateRoutes = [
   {
-    path: "/",
     exact: true,
-    loader: () => import("../layouts/dashboard/default"),
+    loader: () => import("../router/index"),
     menu: false,
     label: "Trang chủ",
     permissionRequired: null,
     icon: "home",
-  }
-  /* 
-
-  {
-    path: "/call",
-    exact: true,
-    loader: () => import("./CallPage/index"),
-  }, */
+  },
 ];
 
-const publicRoutes = [
-];
+const publicRoutes = [];
 
 const errorRoutes = [
   {

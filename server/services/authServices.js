@@ -4,10 +4,13 @@ const { v4: uuidv4 } = require("uuid");
 const { transErrors, transSuccess, transMail } = require("./../../lang/vi");
 const PasswordResetToken = require("../models/passwordResetModel");
 const emailProvider = require("../services/emails/emailProvider");
+const {
+  generateUniqueSecret,
+} = require("../helpers/2fa.js");
 
 let saltRounds = 7;
 
-let register = (fullname, email, gender, password, protocol, host) => {
+let register = (userName, email, gender, password, protocol, host) => {
   return new Promise(async (resolve, reject) => {
     let userByEmail = await UserModel.findByEmail(email);
     if (userByEmail) {
@@ -21,13 +24,14 @@ let register = (fullname, email, gender, password, protocol, host) => {
     }
     let salt = bcrypt.genSaltSync(saltRounds);
     let userItem = {
-      userName: fullname,
+      userName: userName,
       gender: gender,
       local: {
         email: email,
         password: bcrypt.hashSync(password, salt),
         verifyToken: uuidv4(),
       },
+      secretKey: generateUniqueSecret(),
     };
     let user = await UserModel.createNew(userItem);
 

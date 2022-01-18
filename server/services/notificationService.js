@@ -11,12 +11,12 @@ let getNotifications = (currentUserId) => {
     try {
       let notifications = await NotificationModel.model.getByUserIdAndLimit(
         currentUserId,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let getNotificationContent = notifications.map(async (notification) => {
         // Return array Sender send notify
         let sender = await UserModel.getNormalUserDataById(
-          notification.senderId,
+          notification.senderId
         );
         return NotificationModel.contents.getContent(
           notification.type,
@@ -24,6 +24,7 @@ let getNotifications = (currentUserId) => {
           sender._id,
           sender.userName,
           sender.avatar,
+          notification.createdAt
         );
       });
       resolve(await Promise.all(getNotificationContent));
@@ -40,7 +41,7 @@ let countNotifyUnread = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let notificationUnread = await NotificationModel.model.countNotifyUnread(
-        currentUserId,
+        currentUserId
       );
       resolve(notificationUnread);
     } catch (error) {
@@ -60,19 +61,24 @@ let readMore = (currentUserId, skipNumberNotification) => {
       let newNotification = await NotificationModel.model.readMore(
         currentUserId,
         skipNumberNotification,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let getNotificationContent = newNotification.map(async (notification) => {
         // Return array Sender send notify
         let sender = await UserModel.getNormalUserDataById(
-          notification.senderId,
+          notification.senderId
         );
+
         return NotificationModel.contents.getContent(
+          notification._id,
           notification.type,
           notification.isRead,
           sender._id,
           sender.userName,
           sender.avatar,
+          notification.createdAt,
+          notification.link,
+          notification.type,
         );
       });
       resolve(await Promise.all(getNotificationContent));

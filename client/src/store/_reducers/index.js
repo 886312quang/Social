@@ -7,6 +7,7 @@ import message from "./message";
 import contact from "./contact";
 import call from "./call";
 import mode from "./mode";
+import notify from "./notifications";
 
 export default (history) =>
   combineReducers({
@@ -18,4 +19,5 @@ export default (history) =>
     message,
     call,
     mode,
+    notify,
   });

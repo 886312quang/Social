@@ -103,7 +103,7 @@ const authReducer = (state = initialState, { type, payload }) =>
         draft.verify2FA = false;
         break;
       case constants.VERIFY_2FA_SUCCESS:
-        draft.enable2FA = true;
+        draft.enable2FA = payload.enable2FA;
         draft.verify2FA = payload.verify2FA;
         break;
       case constants.ENABLE_2FA:

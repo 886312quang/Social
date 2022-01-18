@@ -1,13 +1,18 @@
 const { emitNotifyToArray } = require("../../helpers/socketHelper");
 
 let acceptRequestContactReceived = (io, data, clients, user) => {
+  /* id: id notify
+      _id: id user
+  */
   let notify = {
-    message: `${user.userName} has added you to the contacts`,
+    content: `đã chấp nhận lời mời kết bạn của bạn.`,
     avatar: user.avatar,
     userName: user.userName,
-    _id: user._id,
-    messages: [],
-    updatedAt: Date.now(),
+    id: data.id,
+    userId: data.userContact._id,
+    createdAt: data.userContact.updatedAt,
+    type: "accept_contact",
+    link: `friend-profile/${data}`,
   };
   // emit Data
   if (clients[data.id]) {
@@ -16,7 +21,7 @@ let acceptRequestContactReceived = (io, data, clients, user) => {
       data.id,
       io,
       "response-accept-request-contact-received",
-      notify,
+      notify
     );
   }
 };

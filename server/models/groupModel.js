@@ -89,7 +89,7 @@ GroupSchema.statics = {
      */
     updateWhenVisited(id) {
         return this.findByIdAndUpdate(id, {
-            countVisited: countVisited + 1,
+            //countVisited: countVisited + 1,
             updatedAt: Date.now(),
         }).exec();
     },

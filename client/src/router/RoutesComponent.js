@@ -18,21 +18,21 @@ const RoutesComponent = () => (
       />
     ))}
 
+    {routes.authRoutes.map((route) => (
+      <AuthRoute
+        key={route.path}
+        exact={true}
+        path={route.path}
+        component={CustomLoadable({ loader: route.loader })}
+      />
+    ))}
+
     {routes.privateRoutes.map((route) => (
       <PrivateRoute
         key={route.path}
         path={route.path}
         component={CustomLoadable({ loader: route.loader })}
         exact={!!route.exact}
-      />
-    ))}
-
-    {routes.authRoutes.map((route) => (
-      <AuthRoute
-        key={route.path}
-        exact
-        path={route.path}
-        component={CustomLoadable({ loader: route.loader })}
       />
     ))}
 

@@ -16,7 +16,7 @@ let findUsersContact = (currentUserId, keyword) => {
     deprecatedUserIds = _.uniqBy(deprecatedUserIds); //Loai bo nhung thang trung lap oK
     let users = await UserModel.findAllForAddContact(
       deprecatedUserIds,
-      keyword,
+      keyword
     );
     resolve(users);
   });
@@ -44,7 +44,7 @@ let addNew = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let contactExist = await ContactModel.checkContactExists(
       currentUserId,
-      contactId,
+      contactId
     );
     if (contactExist) {
       return reject(false);
@@ -61,20 +61,20 @@ let addNew = (currentUserId, contactId) => {
       senderId: currentUserId,
       receiverId: contactId,
       type: NotificationModel.types.ADD_CONTACT,
+      link: currentUserId,
     };
 
-    await NotificationModel.model.createNew(notificationItem);
+    const notify = await NotificationModel.model.createNew(notificationItem);
 
-    resolve(newContact);
+    resolve({ newContact, notify });
   });
 };
 
 let removeRequestContactSent = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
-  
     let removeReq = await ContactModel.removeRequestContactSent(
       currentUserId,
-      contactId,
+      contactId
     );
     // result.n === 0 sua k thanh cong else 1
     if (removeReq.n === 0) {
@@ -85,7 +85,7 @@ let removeRequestContactSent = (currentUserId, contactId) => {
     await NotificationModel.model.removeRequestContactSentNotification(
       currentUserId,
       contactId,
-      NotificationModel.types.ADD_CONTACT,
+      NotificationModel.types.ADD_CONTACT
     );
 
     resolve(true);
@@ -95,7 +95,7 @@ let removeRequestContactReceived = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeReq = await ContactModel.removeRequestContactReceived(
       currentUserId,
-      contactId,
+      contactId
     );
     //{n:0, nModified 0, ok: 1} 0 that bai
     if (removeReq.n === 0) {
@@ -108,7 +108,7 @@ let removeContact = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeContact = await ContactModel.removeContact(
       currentUserId,
-      contactId,
+      contactId
     );
     // result.n === 0 sua k thanh cong else 1
     if (removeContact.n === 0) {
@@ -121,7 +121,7 @@ let acceptRequestContactReceived = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let acceptReq = await ContactModel.acceptRequestContactReceived(
       currentUserId,
-      contactId,
+      contactId
     );
 
     //nModified === 0 sua khong thanh cong else 1 {n:0, nModified 0, ok: 1}
@@ -134,6 +134,7 @@ let acceptRequestContactReceived = (currentUserId, contactId) => {
       senderId: currentUserId,
       receiverId: contactId,
       type: NotificationModel.types.ACCEPT_CONTACT,
+      link: currentUserId,
     };
 
     await NotificationModel.model.createNew(notificationItem);
@@ -147,7 +148,7 @@ let getContacts = (currentUserId) => {
     try {
       let contacts = await ContactModel.getContacts(
         currentUserId,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let users = contacts.map(async (contact) => {
         // Logic quan trong
@@ -170,7 +171,7 @@ let getContactsSent = (currentUserId) => {
     try {
       let contacts = await ContactModel.getContactsSent(
         currentUserId,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
 
       let users = contacts.map(async (contact) => {
@@ -188,7 +189,7 @@ let getContactsReceived = (currentUserId) => {
     try {
       let contacts = await ContactModel.getContactsReceived(
         currentUserId,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let users = contacts.map(async (contact) => {
         return await UserModel.getNormalUserDataById(contact.userId);
@@ -239,7 +240,7 @@ let readMoreContacts = (currentUserId, skipNumber) => {
       let newContacts = await ContactModel.readMoreContacts(
         currentUserId,
         skipNumber,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let users = newContacts.map(async (contact) => {
         if (contact.contactId == currentUserId) {
@@ -261,7 +262,7 @@ let readMoreContactsSent = (currentUserId, skipNumber) => {
       let newContacts = await ContactModel.readMoreContactsSent(
         currentUserId,
         skipNumber,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let users = newContacts.map(async (contact) => {
         return await UserModel.getNormalUserDataById(contact.contactId);
@@ -278,7 +279,7 @@ let readMoreContactsReceived = (currentUserId, skipNumber) => {
       let newContacts = await ContactModel.readMoreContactsReceived(
         currentUserId,
         skipNumber,
-        LIMIT_NUMBER_TAKEN,
+        LIMIT_NUMBER_TAKEN
       );
       let users = newContacts.map(async (contact) => {
         return await UserModel.getNormalUserDataById(contact.userId);

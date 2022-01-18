@@ -56,7 +56,7 @@ let findUsersContact = async (req, res) => {
 let createContact = async (req, res) => {
   try {
     let currentUserId = req.user._id;
-  
+
     let contactId = req.body._id;
     let userContact;
 
@@ -64,8 +64,12 @@ let createContact = async (req, res) => {
     if (newContact) {
       userContact = await UserModel.getNormalUserDataById(contactId);
     }
+    const data = {
+      newContact,
+      userContact,
+    };
 
-    return res.status(200).json(userContact); // return true or false with !!newContact
+    return res.status(200).json(data); // return true or false with !!newContact
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -76,10 +80,7 @@ let removeRequestContactSent = async (req, res) => {
     let currentUserId = req.user._id;
     let contactId = req.params.id;
 
-    await contact.removeRequestContactSent(
-      currentUserId,
-      contactId,
-    );
+    await contact.removeRequestContactSent(currentUserId, contactId);
     return res.status(200).send({ contactId }); // return true or false with !!newContact
   } catch (error) {
     return res.status(500).send(error);
@@ -90,11 +91,10 @@ let removeRequest = async (req, res) => {
   try {
     let currentUserId = req.user._id;
     let contactId = req.params.id;
-    console.log(contactId)
 
     let removeReq = await contact.removeRequestContactReceived(
       currentUserId,
-      contactId,
+      contactId
     );
     return res.status(200).send({ contactId }); // return true or false with !!newContact
   } catch (error) {
@@ -121,7 +121,7 @@ let accept = async (req, res) => {
 
     let acceptReq = await contact.acceptRequestContactReceived(
       currentUserId,
-      contactId,
+      contactId
     );
 
     let userContact = await UserModel.getNormalUserDataById(contactId);

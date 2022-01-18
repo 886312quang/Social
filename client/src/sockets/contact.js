@@ -2,6 +2,7 @@ import getSocket from "./rootSocket";
 import notify from "../components/notifications/notifications";
 import playBell from "../sound/bell";
 import * as constant from "../constants/contact";
+import * as notifyContant from "../constants/notification";
 import getStore from "../configs/configureStore";
 
 // Config socket contact
@@ -12,8 +13,11 @@ export const emitAddContact = (payload) => {
 
 export const onAddContact = (payload) => {
   playBell("notification");
-  notify.info(payload);
   getStore().dispatch({ type: constant.ON_CONTACT_REQUEST_ADD, payload });
+  getStore().dispatch({
+    type: notifyContant.ON_NOTIFICATION_REQUEST_ADD,
+    payload,
+  });
 };
 
 export const emitAcceptRequestContact = (payload) => {
@@ -23,7 +27,10 @@ export const emitAcceptRequestContact = (payload) => {
 export const onAcceptRequestContact = (payload) => {
   playBell("notification");
   getStore().dispatch({ type: constant.ON_ACCEPT_REQUEST_ADD, payload });
-  notify.info(payload);
+  getStore().dispatch({
+    type: notifyContant.ON_NOTIFICATION_REQUEST_ADD,
+    payload,
+  });
 };
 
 export const emitRemoveRequestContact = (payload) => {
@@ -40,6 +47,7 @@ export const emitRemoveRequestSentContact = (payload) => {
 
 export const onRemoveRequestSentContact = (payload) => {
   getStore().dispatch({ type: constant.ON_REMOVE_REQUEST_SENT_ADD, payload });
+  getStore().dispatch({ type: notifyContant.ON_REMOVE_NOTIFICATION, payload });
 };
 
 export const emitRemoveContact = (payload) => {

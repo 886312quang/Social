@@ -19,7 +19,7 @@ module.exports = winston.createLogger({
   ),
   transports: [
     // hiển thị log thông qua console
-    new winston.transports.Console(),
+    // new winston.transports.Console(),
     // Thiết lập ghi các errors vào file
     new winston.transports.File({
       level: "error",

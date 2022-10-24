@@ -35,6 +35,8 @@ const selectRecord = createSelector([selectRaw], (user) => user.record);
 
 const selectCurrentUser = createSelector([selectRaw], (user) => user.current);
 
+const selectFriendProfile = createSelector([selectRaw], (user) => user.friendProfile);
+
 const selectors = {
   selectDataLoading,
   selectInitLoading,
@@ -45,6 +47,7 @@ const selectors = {
   selectRecord,
   selectFindLoading,
   selectCurrentUser,
+  selectFriendProfile,
 };
 
 export default selectors;

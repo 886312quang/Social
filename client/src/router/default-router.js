@@ -8,13 +8,13 @@ import UserPrivacySetting from '../views/dashboard/app/user-privacy-setting';
 import FriendProfile from '../views/dashboard/app/friend-profile';
 import ProfileBadges from '../views/dashboard/app/profile-badges';
 import ProfileForums from '../views/dashboard/app/profile-forum';
-import Chat from '../views/dashboard/app/chat';
 import Notification from '../views/dashboard/app/notification';
 import File from '../views/dashboard/app/file'
 import FriendRequest from '../views/dashboard/app/friend-request'
 import Todo from '../views/dashboard/app/todo';
 import UserAccountSetting from '../views/dashboard/app/user-account-setting';
 import UserProfileEdit from '../views/dashboard/app/user-profile-edit';
+import Chat from '../views/dashboard/app/Chat';
 
 // icon
 import Remixicon from '../views/dashboard/icons/icon-remixicon';
@@ -89,12 +89,12 @@ const DefaultRouter = () => {
                     <Route path="/"  exact component={Index} />
 
                     {/* app */}
-                    <Route path="/dashboard/app/profile"                  component={userProfile} />
+                    <Route path="/dashboard/app/profile/:userId"                   component={userProfile} />
                     <Route path="/dashboard/app/user-privacy-setting"     component={UserPrivacySetting}/>
-                    <Route path="/dashboard/app/friend-profile"           component={FriendProfile} />
+                    <Route path="/dashboard/app/friend-profile/:userId"           component={FriendProfile} />
                     <Route path="/dashboard/app/profile-badges"           component={ProfileBadges} />
                     <Route path="/dashboard/app/profile-forum"            component={ProfileForums} />
-                    <Route path="/dashboard/app/chat"                     component={Chat} />
+                    <Route path="/dashboard/app/chat/:userId"                     component={Chat} />
                     <Route path="/dashboard/app/notification"             component={Notification}/>
                     <Route path="/dashboard/app/file"                     component={File}/>
                     <Route path="/dashboard/app/friend-request"           component={FriendRequest}/>

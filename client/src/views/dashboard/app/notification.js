@@ -63,11 +63,7 @@ const Notification = () => {
             {notify.length > 0
               ? notify.slice(0, 10).map((item, index) => (
                   <Link
-                    to={
-                      item.link
-                        ? `/dashboard/app/${item.link}`
-                        : null
-                    }
+                    to={item.link ? `/dashboard/app/${item.link}` : "#"}
                     onClick={() => handleMarkNotify(item.id, item.isRead)}
                   >
                     <Card>

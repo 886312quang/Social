@@ -8,6 +8,7 @@ module.exports = {
       callback(null, configApp.images_message_directory);
     },
     filename: (req, file, callback) => {
+      console.log("file", file)
       let math = configApp.imageMessage_type;
       if (math.indexOf(file.mimetype) === -1) {
         return callback("Only .png, .jpg and .jpeg format allowed!", null);

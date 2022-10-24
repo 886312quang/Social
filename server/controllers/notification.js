@@ -3,16 +3,18 @@ const NotificationModel = require("../models/notificationModel");
 
 let readMore = async (req, res) => {
   try {
+
     //Get skip number from query params
     let skipNumberNotification = 0;
     // Read more Notify
+
     let newNotification = await notification.readMore(
-      req.user._id,
+      req.user._id || req.user.id,
       skipNumberNotification
     );
-
     return res.status(200).send(newNotification);
   } catch (error) {
+    console.log(error)
     return res.status(500).send(error);
   }
 };
@@ -20,7 +22,7 @@ let readMore = async (req, res) => {
 let markAllAsRead = async (req, res) => {
   try {
     let mark = await notification.markAllAsRead(
-      req.user._id,
+      req.user.id,
       req.body.targetUsers
     );
     return res.status(200).send(mark);
@@ -32,7 +34,6 @@ let markAllAsRead = async (req, res) => {
 let markNotify = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
 
     await NotificationModel.model.markNotify(id);
     return res.status(200).send(id);

@@ -9,13 +9,18 @@ let UserSchema = new Schema({
   userName: String,
   gender: { type: String, default: "male" },
   phone: { type: String, default: null },
-  address: { type: String, default: null },
   avatar: { type: String, default: "avatar-default.jpg" },
   coverPic: { type: String, default: "avatar-default.jpg" },
   role: { type: String, default: "user" },
   enable2FA: { type: Boolean, default: false },
   verify2FA: { type: Boolean, default: false },
   secretKey: { type: String, default: null },
+  about: {
+    job: { type: String, default: null },
+    education: { type: String, default: null },
+    address: { type: String, default: null },
+    marriage: { type: String, default: null },
+  },
   local: {
     email: { type: String, trim: true },
     password: String,
@@ -159,9 +164,13 @@ UserSchema.statics = {
     return this.findById(id, {
       _id: 1,
       userName: 1,
-      address: 1,
       avatar: 1,
+      coverPic: 1,
       phone: 1,
+      about: 1,
+      gender: 1,
+      address: 1,
+      local: { email: 1 },
     }).exec();
   },
   get2FA(id) {

@@ -17,7 +17,7 @@ const WithoutLeftSidebar = () => {
         <>
             <div className="wrapper">
                 <Header />
-                <RightSidebar />
+               <RightSidebar />
                 <div id="content-page" className="content-page">
                     <WithoutLeftSidebarRouter />
                 </div>

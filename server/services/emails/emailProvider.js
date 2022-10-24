@@ -2,16 +2,15 @@ const nodemailer = require("nodemailer");
 const Email = require("email-templates");
 const smtpTransport = require("nodemailer-smtp-transport");
 
-const transporter = nodemailer.createTransport(
-  smtpTransport({
-    service: "gmail",
-    auth: {
-      user: "quanlyahoochat77777777@gmail.com",
-      pass: "ahoochat#9999999",
-    },
-    secure: false, // upgrades later with STARTTLS -- change this based on the PORT
-  }),
-);
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: "quanlyahoochat9898@gmail.com",
+    pass: "mfercgzhltgussxw",
+  },
+  host: 'smtp.gmail.com',
+  port: 465,
+});
 
 // verify connection configuration
 transporter.verify((error) => {
@@ -25,7 +24,7 @@ exports.sendPasswordReset = async (passwordResetObject) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: "quanlyahoochat7777@gmail.com",
+      from: "quanlyahoochat9898@gmail.com",
     },
     // uncomment below to send emails in development/test env:
     send: true,
@@ -55,7 +54,7 @@ exports.sendPasswordChangeEmail = async (user) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: "quanlyahoochat7777@gmail.com",
+      from: "quanlyahoochat9898@gmail.com",
     },
     // uncomment below to send emails in development/test env:
     send: true,
@@ -76,6 +75,7 @@ exports.sendPasswordChangeEmail = async (user) => {
     .catch((error) => {
       console.log("error sending change password email");
       console.log(error);
+      return res.status(500).json({ message: error });
     });
 };
 
@@ -83,7 +83,7 @@ exports.verifyEmailAccount = async (user) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: "quanlyahoochat7777@gmail.com",
+      from: "quanlyahoochat9898@gmail.com",
     },
     // uncomment below to send emails in development/test env:
     send: true,

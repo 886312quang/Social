@@ -5,6 +5,10 @@ const services = {
     const response = await api.get("/user/current");
     return response;
   },
+  getFriendProfile: async (id) => {
+    const response = await api.get(`/user/${id}`);
+    return response;
+  },
   listFriend: async ({ term }) => {
     let url = "/user";
     url = term ? url + `?term=${term}` : url;

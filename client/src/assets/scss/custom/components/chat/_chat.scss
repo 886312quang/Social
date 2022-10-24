@@ -4,6 +4,40 @@
 			@include radius-mixin($border-radius);
 		}
 	}
+	.photo {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		margin: 1px 3px;
+		border-radius: 10px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		
+		margin-bottom: 22px;
+		&:last-child {
+			margin-right: 24px;
+		}
+	  }
+
+	  .photoL {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		margin: 1px 3px;
+		border-radius: 10px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		
+		margin-bottom: 22px;
+		&:first-child {
+			margin-left: 22px;
+		}
+	  }
+	  .ant-upload-list {
+		display: inline-block;
+	}
 }
 #chat-search {
 	padding-left: 2.5rem;
@@ -16,6 +50,27 @@
 		color: $primary;
 		font-size: 1rem;
 	}
+}
+.chat-footer {
+	.custom-file-button input[type=file] {
+		margin-left: -2px !important;
+		display: none;
+	  }
+	  
+	  .custom-file-button input[type=file]::-webkit-file-upload-button {
+		display: none;
+	  }
+	  
+	  .custom-file-button input[type=file]::file-selector-button {
+		display: none;
+	  }
+	  
+	  .custom-file-button:hover label {
+		cursor: pointer;
+	  }
+	  .custom-file-label{
+		display: block;
+	  }
 }
 .chat-sidebar-name {
 	width: 100%;
@@ -145,7 +200,7 @@ span.avatar-status {
 }
 .chat-content {
 	position: relative;
-	height: calc(100vh - 11rem);
+	height: calc(100vh - 17rem);
 	text-align: center;
 	padding: 1.4rem;
 	overflow-y: scroll;
@@ -169,6 +224,7 @@ span.avatar-status {
 			}
 		}
 	}
+
 }
 .chat-user {
 	text-align: center;

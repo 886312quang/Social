@@ -4,8 +4,15 @@
       @include radius-mixin($border-radius-pill);
     }
     border: 1px solid rgba(0, 0, 0, 0.1);
-    height: auto;
   }
+}
+.friend-profile {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  line-height: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 ul.header-nav {
   position: absolute;

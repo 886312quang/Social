@@ -27,6 +27,14 @@ let getCurrentUser = async (req, res) => {
   return res.status(200).json(user);
 };
 
+let getFriendInfo = async (req, res) => {
+  let userId = req.params.id;
+
+  const user = await UserModel.getNormalUserDataById(userId);
+
+  return res.status(200).json(user);
+};
+
 let updatePassword = async (req, res) => {
   let errorArr = [];
   let validationErr = validationResult(req);
@@ -149,7 +157,7 @@ let getICETurnServer = () => {
         Authorization:
           "Basic " +
           Buffer.from(
-            "dasdaha123456:ab1cfb58-c7f8-11ea-95a2-0242ac150003",
+            "dasdaha123456:ab1cfb58-c7f8-11ea-95a2-0242ac150003"
           ).toString("base64"),
         "Content-Type": "application/json",
         "Content-Length": bodyString.length,
@@ -196,7 +204,7 @@ let follow = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}
+};
 
 let unfollow = async (req, res) => {
   try {
@@ -215,10 +223,11 @@ let unfollow = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}
+};
 
 module.exports = {
   getCurrentUser,
+  getFriendInfo,
   load,
   updatePassword,
   updateInfo,

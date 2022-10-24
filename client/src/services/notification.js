@@ -2,7 +2,7 @@ import api from "../api/api";
 
 const services = {
   getNotifications: async () => {
-    const response = await api.get(`/notification`);
+    const response = await api.get(`/notification/`);
     return response;
   },
   markNotify: async (id) => {

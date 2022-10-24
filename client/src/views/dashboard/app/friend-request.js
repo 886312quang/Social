@@ -3,7 +3,6 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 import Card from "../../../components/Card";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import actions from "../../../store/_actions/auth";
 import contactActions from "../../../store/_actions/contact";
 import userActions from "../../../store/_actions/user";
 import userSelectors from "../../../store/_selectors/user";

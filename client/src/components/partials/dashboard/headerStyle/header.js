@@ -35,6 +35,8 @@ const Header = () => {
   // User
   const users = useSelector(userSelectors.selectUsers);
   const currentUser = useSelector(userSelectors.selectCurrentUser);
+  
+  console.log(currentUser)
 
   // Notify
   const notify = useSelector(notifySelectors.selectNotifys);
@@ -144,19 +146,38 @@ const Header = () => {
                               <div className="iq-friend-request" key={index}>
                                 <div className="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
                                   <div className="d-flex align-items-center">
-                                    <Image
-                                      className="avatar-40 rounded"
-                                      src={
-                                        process.env.REACT_APP_STATIC_AVATARS +
-                                        "/" +
-                                        item.avatar
+                                    <Link
+                                      to={
+                                        item._id
+                                          ? `/dashboard/app/profile/${item._id}`
+                                          : "#"
                                       }
-                                      alt=""
-                                    />
-                                    <div className="ms-3">
-                                      <h6 className="mb-0 ">{item.userName}</h6>
-                                      <p className="mb-0">40 friends</p>
-                                    </div>
+                                    >
+                                      <Image
+                                        className="avatar-40 rounded"
+                                        src={
+                                          item.avatar &&
+                                          process.env.REACT_APP_STATIC_AVATARS +
+                                            "/" +
+                                            item.avatar
+                                        }
+                                        alt=""
+                                      />
+                                    </Link>
+                                    <Link
+                                      to={
+                                        item._id
+                                          ? `/dashboard/app/profile/${item._id}`
+                                          : "#"
+                                      }
+                                    >
+                                      <div className="ms-3">
+                                        <h6 className="mb-0 ">
+                                          {item.userName}
+                                        </h6>
+                                        <p className="mb-0">40 friends</p>
+                                      </div>
+                                    </Link>
                                   </div>
                                   <div className="d-flex align-items-center">
                                     {item.status === true ? (
@@ -346,7 +367,9 @@ const Header = () => {
                         {notify.length > 0 ? (
                           notify.slice(0, 5).map((item, index) => (
                             <Link
-                              to={item.link ? `/dashboard/app/${item.link}` : "#"}
+                              to={
+                                item.link ? `/dashboard/app/${item.link}` : "#"
+                              }
                               className="iq-sub-card d-flex align-items-center justify-content-between"
                               key={index}
                               onClick={() =>
@@ -431,7 +454,9 @@ const Header = () => {
                     />
                     <div className="caption">
                       <h6 className="mb-0 line-height">
-                        {currentUser && currentUser.userName}
+                        {currentUser &&
+                          currentUser.userName &&
+                          currentUser.userName}
                       </h6>
                     </div>
                   </Dropdown.Toggle>
@@ -442,7 +467,11 @@ const Header = () => {
                     <Card className="shadow-1 m-0">
                       <Card.Header className="bg-primary">
                         <div className="header-title">
-                          <h5 className="mb-0 text-white">Hello Bni Cyst</h5>
+                          <h5 className="mb-0 text-white">
+                            {currentUser &&
+                              currentUser.userName &&
+                              currentUser.userName}
+                          </h5>
                           <span className="text-white font-size-12">
                             Available
                           </span>
@@ -450,7 +479,9 @@ const Header = () => {
                       </Card.Header>
                       <Card.Body className="p-0 ">
                         <Link
-                          to="/dashboard/app/profile"
+                          to={`/dashboard/app/profile/${
+                            currentUser ? currentUser._id : null
+                          }`}
                           className="iq-sub-card iq-bg-primary-hover d-flex align-items-center justify-content-between"
                         >
                           <div className="d-flex align-items-center">

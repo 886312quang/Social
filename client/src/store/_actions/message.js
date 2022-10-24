@@ -1,15 +1,15 @@
-import Message from "../components/Shared/message";
-import { getHistory } from "../configs/configureStore";
-import * as constantLayout from "../constants/layout";
-import constants from "../constants/message";
-import services from "../services/messages";
+import Message from "../../components/notifications/notifications";
+import { getHistory } from "../../configs/configureStore";
+import * as constantLayout from "../../constants/layout";
+import constants from "../../constants/message";
+import services from "../../services/messages";
 import {
   emitAddMemberToGroup,
   emitCreateGroup,
   emitRemoveMemberInGroup,
   emitSentMessage,
-} from "../sockets/chat";
-import { emitCheckStatus } from "../sockets/checkStatus";
+} from "../../sockets/chat";
+import { emitCheckStatus } from "../../sockets/checkStatus";
 //import services from "../services/user";
 import layoutActions from "../_actions/layout";
 

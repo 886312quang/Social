@@ -11,6 +11,9 @@ router.param("userId", user.load);
 // Get current user
 router.route("/current").get(AuthMiddleware.isAuth, user.getCurrentUser);
 
+// Get friend-profile
+router.route("/:id").get(AuthMiddleware.isAuth, user.getFriendInfo);
+
 // Update user
 router
   .route("/updatePassword")

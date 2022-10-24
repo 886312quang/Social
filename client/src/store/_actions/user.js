@@ -27,21 +27,43 @@ const actions = {
       });
     }
   },
-  list: (filter = {}) => async (dispatch) => {
+  getFriendProfile: (id) => async (dispatch) => {
     try {
-      dispatch({ type: constants.USER_GET_START });
+      dispatch({
+        type: constants.FRIEND_PROFILE_GET_START,
+      });
 
-      let response = await services.listFriend(filter);
+      let response = await services.getFriendProfile(id);
 
       dispatch({
-        type: constants.USER_GET_SUCCESS,
+        type: constants.FRIEND_PROFILE_GET_SUCCESS,
         payload: response.data,
       });
     } catch (error) {
       Errors.handle(error);
-      dispatch({ type: constants.USER_GET_ERROR });
+
+      dispatch({
+        type: constants.FRIEND_PROFILE_GET_ERROR,
+      });
     }
   },
+  list:
+    (filter = {}) =>
+    async (dispatch) => {
+      try {
+        dispatch({ type: constants.USER_GET_START });
+
+        let response = await services.listFriend(filter);
+
+        dispatch({
+          type: constants.USER_GET_SUCCESS,
+          payload: response.data,
+        });
+      } catch (error) {
+        Errors.handle(error);
+        dispatch({ type: constants.USER_GET_ERROR });
+      }
+    },
   doUpdatePassword: (values) => async (dispatch) => {
     try {
       dispatch({ type: constants.USER_UPDATE_PASSWORD_START });
@@ -117,7 +139,6 @@ const actions = {
       });
     }
   },
-
 };
 
 export default actions;

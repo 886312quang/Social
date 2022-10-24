@@ -91,7 +91,7 @@ let addPhotos = (req, res, next) => {
   photosUploadFile(req, res, async (err) => {
     try {
       if (!req.file) {
-        console.log(err);
+        console.log(req.body);
         return res.status(500).send(err);
       }
 
@@ -139,6 +139,8 @@ let addNewImage = async (req, res) => {
         messageVal.push(image);
       });
       let isChatGroup = req.body.isChatGroup;
+
+      console.log("messageVal", messageVal)
 
       let newMessage = await message.addNewImage(
         sender,

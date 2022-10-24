@@ -14,6 +14,7 @@ const initialState = {
   record: null,
   users: [],
   current: null,
+  friendProfile: null,
 };
 
 const userReducer = (state = initialState, { type, payload }) =>
@@ -32,6 +33,20 @@ const userReducer = (state = initialState, { type, payload }) =>
         draft.error = null;
         break;
       case constants.USER_GET_ERROR:
+        draft.findLoading = false;
+        draft.error = payload;
+        break;
+      case constants.FRIEND_PROFILE_GET_START:
+        draft.findLoading = true;
+        draft.friendProfile = null;
+        draft.error = null;
+        break;
+      case constants.FRIEND_PROFILE_GET_SUCCESS:
+        draft.findLoading = false;
+        draft.friendProfile = payload;
+        draft.error = null;
+        break;
+      case constants.FRIEND_PROFILE_GET_ERROR:
         draft.findLoading = false;
         draft.error = payload;
         break;

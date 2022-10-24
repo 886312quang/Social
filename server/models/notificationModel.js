@@ -110,7 +110,7 @@ const NOTIFICATION_CONTENT = {
         content: "đã gửi lời mời kết bạn với bạn.",
         createdAt: createdAt,
         isRead: isRead,
-        link: `friend-profile/${link}`,
+        link: `profile/${link}`,
         type: NOTIFICATION_TYPES.ADD_CONTACT,
       };
     }
@@ -123,7 +123,7 @@ const NOTIFICATION_CONTENT = {
         content: "đã chấp nhận lời mời kết bạn của bạn.",
         createdAt: createdAt,
         isRead: isRead,
-        link: `friend-profile/${link}`,
+        link: `profile/${link}`,
         type: NOTIFICATION_TYPES.ACCEPT_CONTACT,
       };
     }

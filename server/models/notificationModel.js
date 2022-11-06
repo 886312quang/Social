@@ -89,6 +89,7 @@ const NOTIFICATION_TYPES = {
   ACCEPT_CONTACT: "accept_contact",
   LIKES_POST: "likes_post",
   COMMENT_POST: "comment_post",
+  REP_COMMENT_POST: "rep_comment_post",
 };
 const NOTIFICATION_CONTENT = {
   getContent: (
@@ -138,6 +139,19 @@ const NOTIFICATION_CONTENT = {
         isRead: isRead,
         link: link,
         type: NOTIFICATION_TYPES.LIKES_POST,
+      };
+    }
+    if (notificationType === NOTIFICATION_TYPES.REP_COMMENT_POST) {
+      return {
+        id: _id,
+        userId: userId,
+        avatar: avatar,
+        userName: userName,
+        content: "đã nhắc đến bạn trong một bình luận.",
+        createdAt: createdAt,
+        isRead: isRead,
+        link: link,
+        type: NOTIFICATION_TYPES.REP_COMMENT_POST,
       };
     }
     if (notificationType === NOTIFICATION_TYPES.COMMENT_POST) {

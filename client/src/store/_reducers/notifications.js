@@ -23,7 +23,8 @@ const contactReducer = (state = initialState, { type, payload }) =>
         draft.notifys = payload;
         draft.notifys.forEach((item) => {
           if (!item.isRead) {
-            draft.countNotify = state.countNotify + 1;
+            console.log(item);
+            draft.countNotify += 1;
           }
         });
         draft.error = null;

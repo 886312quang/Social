@@ -1,26 +1,27 @@
-const express = require("express");
-const { post } = require("../controllers/index");
+const router = require("express").Router();
+const post = require("../controllers/post");
 const AuthMiddleware = require("../middleware/auth");
-const { messageValid } = require("../validation/index");
 
-const router = express.Router();
+router.route("/").post(AuthMiddleware.isAuth, post.createPost).get(AuthMiddleware.isAuth, post.getPosts);
 
-//new post
-router.route("/")
-    .post(AuthMiddleware.isAuth, post.newPost);
+router
+  .route("/:id")
+  .patch(AuthMiddleware.isAuth, post.updatePost)
+  .get(AuthMiddleware.isAuth, post.getPost)
+  .delete(AuthMiddleware.isAuth, post.deletePost);
 
-//update post
-router.route("/:id")
-    .put(AuthMiddleware.isAuth, post.updatePost)
-    .delete(AuthMiddleware.isAuth, post.deletePost)
-    .get(post.getPost);
+router.patch("/:id/like", AuthMiddleware.isAuth, post.likePost);
 
-//like post
-router.route("/like/:id")
-    .put(AuthMiddleware.isAuth, post.likePost);
+router.patch("/:id/unlike", AuthMiddleware.isAuth, post.unLikePost);
 
-//get timeline
-router.route("/timeline")
-    .get(post.getTimeline);
+router.get("/user_posts/:id", AuthMiddleware.isAuth, post.getUserPosts);
+
+router.get("/post_discover", AuthMiddleware.isAuth, post.getPostsDicover);
+
+router.patch("/savePost/:id", AuthMiddleware.isAuth, post.savePost);
+
+router.patch("/unSavePost/:id", AuthMiddleware.isAuth, post.unSavePost);
+
+router.get("/getSavePosts", AuthMiddleware.isAuth, post.getSavePosts);
 
 module.exports = router;

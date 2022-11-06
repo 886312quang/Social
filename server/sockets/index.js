@@ -26,9 +26,13 @@ const callerCancelRequestCall = require("./call/callerCancelRequestCall");
 const listenerRejectCall = require("./call/listenerRejectCall");
 const listenerAnswerCall = require("./call/listenerAnwserCall");
 const callEnded = require("./call/callEnded");
+const likePost = require("./post/likePost");
+const unLikePost = require("./post/unLikePost");
+
 // Logger
 const logger = require("../config/winton");
 const { isObject } = require("lodash");
+const createComment = require("./comment/createComment");
 
 let initSockets = (io) => {
   io.use(
@@ -97,6 +101,19 @@ let initSockets = (io) => {
       });
       socket.on("remove-contact", (data) => {
         removeContact(io, data, clients, user);
+      });
+
+      // Comment 
+      socket.on("createComment", (data) => {
+        createComment(io, data, clients, user);
+      });
+      
+      // Post
+      socket.on("likePost", (data) => {
+        likePost(io, data, clients, user);
+      });
+      socket.on("unlikePost", (data) => {
+        unLikePost(io, data, clients, user);
       });
 
       // Chat

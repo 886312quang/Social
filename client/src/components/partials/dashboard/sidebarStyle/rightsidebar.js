@@ -16,7 +16,8 @@ import userSelectors from "../../../../store/_selectors/user";
 import actions from "../../../../store/_actions/message";
 import constants from "../../../../constants/message";
 import { Link } from "react-router-dom";
-import classNames from 'classnames/bind';
+import classNames from "classnames/bind";
+import { formatDistanceToNowStrict } from "date-fns";
 let cx = classNames.bind();
 
 const RightSidebar = () => {
@@ -48,14 +49,22 @@ const RightSidebar = () => {
                   messages.length > 0 &&
                   messages.map((item, index) => (
                     <Link
-                      to={`/dashboard/app/chat/${item._id}`}
+                      to={`/dashboard/app/chat/${item?._id || item?.id}`}
                       onClick={() => dispatch({ type: constants.CLICK_TARGET })}
                     >
                       <div
                         className="d-flex align-items-center mb-4 pointer iq-menu"
                         key={index}
                       >
-                        <div className={cx(`iq-profile-avatar ${item?.online === true ? 'status-online' : 'status-away'}`)}>
+                        <div
+                          className={cx(
+                            `iq-profile-avatar ${
+                              item?.online === true
+                                ? "status-online"
+                                : "status-away"
+                            }`
+                          )}
+                        >
                           <Image
                             className="rounded-circle avatar-50"
                             src={
@@ -71,7 +80,17 @@ const RightSidebar = () => {
                           <h6 className="mb-0">
                             {item?.userName || item?.name}
                           </h6>
-                          <p className="mb-0">Just Now</p>
+                          <p className="mb-0">
+                            {" "}
+                            {item?.updatedAt
+                              ? formatDistanceToNowStrict(
+                                  new Date(item?.updatedAt),
+                                  {
+                                    addSuffix: false,
+                                  }
+                                )
+                              : ""}
+                          </p>
                         </div>
                       </div>
                     </Link>

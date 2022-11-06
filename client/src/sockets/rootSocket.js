@@ -36,6 +36,8 @@ import {
   onCallerAnswerCall,
   onCallEnded,
 } from "./call";
+import { onLikepost, onUnlikepost } from "./post";
+import { onCreateComment } from "./comment";
 const endpoint = process.env.REACT_APP_SOCKET_ENDPOINT;
 
 let socket = null;
@@ -85,6 +87,12 @@ export const configSocket = () => {
     socket.on("response-change-name-group", onChangeNameGroup);
     socket.on("response-change-avatar-group", onChangAvatarGroup);
 
+    // Comment
+    socket.on("response-create-comment", onCreateComment);
+
+    // Post
+    socket.on("response-like-post", onLikepost);
+    socket.on("response-unlike-post", onUnlikepost);
     // Call
     //Step 1,2
     socket.on("server-caller-listener-status", onListenerStatus);

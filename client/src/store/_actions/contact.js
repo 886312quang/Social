@@ -72,8 +72,6 @@ const actions = {
 
       const response = await services.createContact(userInfo);
 
-      console.log(response);
-
       emitAddContact(response.data.newContact);
 
       dispatch({

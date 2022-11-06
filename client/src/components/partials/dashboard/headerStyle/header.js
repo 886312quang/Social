@@ -36,8 +36,6 @@ const Header = () => {
   const users = useSelector(userSelectors.selectUsers);
   const currentUser = useSelector(userSelectors.selectCurrentUser);
   
-  console.log(currentUser)
-
   // Notify
   const notify = useSelector(notifySelectors.selectNotifys);
   const countNotify = useSelector(notifySelectors.selectCountNotify);
@@ -368,7 +366,7 @@ const Header = () => {
                           notify.slice(0, 5).map((item, index) => (
                             <Link
                               to={
-                                item.link ? `/dashboard/app/${item.link}` : "#"
+                                item?.link ? `/dashboard/app/${item?.link}` : "#"
                               }
                               className="iq-sub-card d-flex align-items-center justify-content-between"
                               key={index}

@@ -3,7 +3,7 @@ const UserModel = require("./../models/userModel");
 const NotificationModel = require("./../models/notificationModel");
 const _ = require("lodash");
 
-const LIMIT_NUMBER_TAKEN = 10;
+const LIMIT_NUMBER_TAKEN = 100;
 
 let findUsersContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {

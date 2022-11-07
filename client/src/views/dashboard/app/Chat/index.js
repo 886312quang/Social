@@ -30,31 +30,13 @@ let cx = classNames.bind();
 const Chat = () => {
   const dispatch = useDispatch();
 
-  const [show, setShow] = useState("");
-  const [show1, setShow1] = useState("");
   const record = useSelector(selectors.selectRecord);
-  const typing = useSelector(selectors.selectTyping);
-  const hasMoreConversation = useSelector(selectors.selectHasMoreConversation);
-  const sending = useSelector(selectors.selectSending);
-  const findLoading = useSelector(selectors.selectFindLoading);
-  const currentUser = useSelector(userSelectors.selectCurrentUser);
   const target = useSelector(selectors.selectClickTarget);
   const inputMessage = useSelector(selectors.selectInputMessage);
 
   // Params
   let userId = useParams();
   let lengthObjUserId = Object.entries(userId).length;
-  useEffect(() => {
-    async function load(userId) {
-      await dispatch(actions.list());
-      if (lengthObjUserId > 0 && !target) {
-        await dispatch({
-          type: constants.TARGET_CONVERSATION,
-          payload: userId,
-        });
-      }
-    }
-  }, []);
 
   useEffect(() => {
     if (lengthObjUserId > 0 && target) {
@@ -63,7 +45,6 @@ const Chat = () => {
     }
   }, [userId]);
 
-  console.log(record?.messages);
 
   // State
   const [imageViewModelVisible, setImageViewModelVisible] = useState(false);
@@ -102,9 +83,7 @@ const Chat = () => {
     }
 
     load(userId);
-  }, []);
-
-  console.log(record);
+  }, [userId]);
 
   return (
     <>

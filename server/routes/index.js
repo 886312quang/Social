@@ -8,6 +8,7 @@ const messages = require("./messages");
 const group = require("./group");
 const post = require("./post");
 const notify = require("./notification");
+const comment = require("./comment");
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use("/message", messages);
 router.use("/group", group);
 router.use("/post", post);
 router.use("/notification", notify);
+router.use("/comment", comment)
 
 module.exports = router;

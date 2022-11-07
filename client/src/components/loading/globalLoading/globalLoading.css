@@ -1,0 +1,90 @@
+
+.backGroundGlobalLoading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255,255,255, 0.7);
+    z-index: 1000;
+}
+
+._preloader {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index:  9999;
+}
+
+._item {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+}
+
+._item-1 {
+    background-color: #00C875;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    animation: _item-1_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+}
+
+._item-2 {
+    background-color: #0095FF;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    animation: _item-2_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+}
+
+._item-3 {
+    background-color: #FFAA00;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    animation: _item-3_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+}
+
+._item-4 {
+    background-color: #FF3D71;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    animation: _item-4_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+}
+
+@keyframes _item-1_move {
+    0%, 100% {transform: translate(0, 0)}
+    25% {transform: translate(0, 55px)}
+    50% {transform: translate(55px, 55px)}
+    75% {transform: translate(55px, 0)}
+}
+
+@keyframes _item-2_move {
+    0%, 100% {transform: translate(0, 0)}
+    25% {transform: translate(-55px, 0)}
+    50% {transform: translate(-55px, 55px)}
+    75% {transform: translate(0, 55px)}
+}
+
+@keyframes _item-3_move {
+    0%, 100% {transform: translate(0, 0)}
+    25% {transform: translate(0, -55px)}
+    50% {transform: translate(-55px, -55px)}
+    75% {transform: translate(-55px, 0)}
+}
+
+@keyframes _item-4_move {
+    0%, 100% {transform: translate(0, 0)}
+    25% {transform: translate(55px, 0)}
+    50% {transform: translate(55px, -55px)}
+    75% {transform: translate(0, -55px)}
+}

@@ -81,6 +81,8 @@ import PrivacyPolicy from '../views/dashboard/extrapages/privacy-policy';
 import TermsofService from '../views/dashboard/extrapages/terms-of-service';
 import BlankPage from '../views/dashboard/extrapages/blankpage';
 
+import PostDetail from "../views/dashboard/app/NewsFeed/index"
+
 const DefaultRouter = () => {
     return (
         <TransitionGroup>
@@ -101,6 +103,7 @@ const DefaultRouter = () => {
                     <Route path="/dashboard/app/todo"                     component={Todo}/>
                     <Route path="/dashboard/app/user-account-setting"     component={UserAccountSetting}/>
                     <Route path="/dashboard/app/user-profile-edit"        component={UserProfileEdit}/>
+                    <Route path="/dashboard/app/post/:id"        component={PostDetail}/>
 
                      {/* icon */}
                      <Route path="/dashboard/icon/fontawesome-5"          component={Fontawesome}/>

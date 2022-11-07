@@ -13,7 +13,6 @@ let getNotifications = (currentUserId) => {
         currentUserId,
         LIMIT_NUMBER_TAKEN
       );
-      console.log(notifications)
       let getNotificationContent = notifications.map(async (notification) => {
         // Return array Sender send notify
         let sender = await UserModel.getNormalUserDataById(
@@ -22,6 +21,7 @@ let getNotifications = (currentUserId) => {
         return NotificationModel.contents.getContent(
           notification.type,
           notification.isRead,
+          notification.mentioned,
           sender._id,
           sender.userName,
           sender.avatar,

@@ -8,6 +8,7 @@ const actions = {
       dispatch({ type: constants.NOTIFICATION_GET_START });
 
       let response = await services.getNotifications();
+      console.log("notify", response);
       dispatch({
         type: constants.NOTIFICATION_GET_SUCCESS,
         payload: response.data,

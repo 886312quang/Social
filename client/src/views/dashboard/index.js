@@ -23,9 +23,7 @@ import CardPost from "./app/NewsFeed/post/index";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../store/_actions/post";
 import { POST_TYPES } from "../../store/_actions/post";
-import postSelectors from "../../store/_selectors/post";
 import api from "../../api/api";
-import InfiniteScroll from "react-infinite-scroller";
 
 const Index = () => {
   const [show, setShow] = useState(false);

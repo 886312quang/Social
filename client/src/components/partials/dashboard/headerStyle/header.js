@@ -92,6 +92,12 @@ const Header = () => {
     dispatch(notifyActions.getNotifications());
   }, []);
 
+  const handleKeyPress = (e) => {
+    if (e.charCode === 13) { 
+      e.preventDefault();
+    }
+  }
+  
   return (
     <>
       <div className="iq-top-navbar">
@@ -116,7 +122,7 @@ const Header = () => {
                 <Dropdown as="li" className="nav-item">
                   <Dropdown.Toggle href="#" variant="search-toggle">
                     <div className="iq-search-bar device-search">
-                      <Form action="#" className="searchbox">
+                      <Form  className="searchbox" onKeyPress={handleKeyPress}>
                         <input
                           type="text"
                           className="text search-input"

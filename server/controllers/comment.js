@@ -40,7 +40,7 @@ const commentCtrl = {
 
       let mentioned = response?.reply ? true : false;
 
-      if (mentioned || (!mentioned && response?.user != response?.postUserId)) {
+      if (mentioned || (!mentioned && req.user._id != response?.postUserId)) {
         // Create Notification
         let notificationItem = {
           senderId: req.user._id,

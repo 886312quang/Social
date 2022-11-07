@@ -3,6 +3,7 @@ const Comments = require("../models/commentModel");
 const Users = require("../models/userModel");
 const { contact } = require("../services/index");
 const notificationModel = require("../models/notificationModel");
+const { getSentiment } = require("../helpers/nlp");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -33,13 +34,15 @@ const postCtrl = {
         user: req.user._id,
       });
       await newPost.save();
-
+      const sentiment = await getSentiment(content);
+   
       res.json({
         msg: "Created Post!",
         newPost: {
           ...newPost._doc,
           user: req.user,
         },
+        sentiment
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -66,6 +69,7 @@ const postCtrl = {
             select: "-password",
           },
         });
+
       res.json({
         msg: "Success!",
         result: posts.length,

@@ -28,9 +28,11 @@ export const createPost =
 
       const res = await api.post("/post", { content, images: media });
 
+      console.log(res.data.newPost);
+
       dispatch({
         type: POST_TYPES.CREATE_POST,
-        payload: { ...res.data.newPost, user: auth.user },
+        payload: { ...res.data.newPost },
       });
 
       dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });

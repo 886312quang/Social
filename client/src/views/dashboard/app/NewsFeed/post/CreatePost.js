@@ -7,7 +7,6 @@ import CustomToggle from "../../../../../components/dropdowns";
 import userSelectors from "../../../../../store/_selectors/user";
 import { GLOBALTYPES } from "../../../../../store/_actions/globalTypes";
 import { createPost, updatePost } from "../../../../../store/_actions/post";
-import Icons from "../Icons";
 import { imageShow, videoShow } from "../../../../../utils/mediaShow";
 
 export default function CreatePost() {
@@ -93,6 +92,7 @@ export default function CreatePost() {
     //     type: GLOBALTYPES.ALERT, payload: {error: "Please add your photo."}
     // })
 
+
     if (status?.onEdit) {
       dispatch(updatePost({ content, images, auth, status }));
     } else {
@@ -110,6 +110,12 @@ export default function CreatePost() {
       setShow(true);
     }
   }, [status]);
+
+  const handleKeyPress = (e) => {
+    if (e.charCode === 13) { 
+      e.preventDefault();
+    }
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -220,6 +226,7 @@ export default function CreatePost() {
                 className="post-text ms-3 w-100 "
                 data-bs-toggle="modal"
                 data-bs-target="#post-modal"
+                onKeyPress={handleKeyPress}
               >
                 <input
                   type="text"

@@ -11,6 +11,7 @@ const saltRounds = 7;
  */
 
 let updateUser = (id, item) => {
+  console.log(item);
   return UserModel.updateUser(id, item);
 };
 

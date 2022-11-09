@@ -108,6 +108,9 @@ const ChangePassword = () => {
     dispatch(actions.doInitLoadingDone());
   }, []);
 
+
+  console.log(errors)
+
   return (
     <>
       <section className="sign-in-page">
@@ -195,7 +198,7 @@ const ChangePassword = () => {
                       type="password"
                       className="mb-0"
                       id="validationTooltipEmail"
-                      placeholder="Enter email"
+                      placeholder="Enter password"
                       required
                       onChange={(e) => setField("password", e.target.value)}
                       isInvalid={!!errors.password}

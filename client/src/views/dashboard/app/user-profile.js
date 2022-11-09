@@ -1,56 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Row,
-  Col,
+  Button, Col,
   Container,
-  Dropdown,
-  Nav,
-  Tab,
-  OverlayTrigger,
-  Tooltip,
-  Button,
-  Modal,
+  Dropdown, Modal, Nav, OverlayTrigger, Row, Tab, Tooltip
 } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import Card from "../../../components/Card";
 import CustomToggle from "../../../components/dropdowns";
 import ShareOffcanvas from "../../../components/share-offcanvas";
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import userActions from "../../../store/_actions/user";
-import userSelectors from "../../../store/_selectors/user";
 import contactActions from "../../../store/_actions/contact";
+import userActions from "../../../store/_actions/user";
 import contactSelectors from "../../../store/_selectors/contact";
+import userSelectors from "../../../store/_selectors/user";
 
 // images
-import img1 from "../../../assets/images/page-img/profile-bg1.jpg";
-import img2 from "../../../assets/images/user/11.png";
-import img3 from "../../../assets/images/icon/08.png";
-import img4 from "../../../assets/images/icon/09.png";
-import img5 from "../../../assets/images/icon/10.png";
-import img6 from "../../../assets/images/icon/11.png";
-import img7 from "../../../assets/images/icon/12.png";
-import img8 from "../../../assets/images/icon/13.png";
-import img9 from "../../../assets/images/page-img/07.jpg";
-import img10 from "../../../assets/images/page-img/06.jpg";
-import user1 from "../../../assets/images/user/1.jpg";
-import user05 from "../../../assets/images/user/05.jpg";
-import user01 from "../../../assets/images/user/01.jpg";
-import user02 from "../../../assets/images/user/02.jpg";
-import user03 from "../../../assets/images/user/03.jpg";
-import user06 from "../../../assets/images/user/06.jpg";
-import user07 from "../../../assets/images/user/07.jpg";
-import user08 from "../../../assets/images/user/08.jpg";
-import user09 from "../../../assets/images/user/09.jpg";
-import user10 from "../../../assets/images/user/10.jpg";
-import user13 from "../../../assets/images/user/13.jpg";
-import user14 from "../../../assets/images/user/14.jpg";
-import user15 from "../../../assets/images/user/15.jpg";
-import user16 from "../../../assets/images/user/16.jpg";
-import user17 from "../../../assets/images/user/17.jpg";
-import user18 from "../../../assets/images/user/18.jpg";
-import user19 from "../../../assets/images/user/19.jpg";
-import p1 from "../../../assets/images/page-img/p1.jpg";
-import p3 from "../../../assets/images/page-img/p3.jpg";
 import icon1 from "../../../assets/images/icon/01.png";
 import icon2 from "../../../assets/images/icon/02.png";
 import icon3 from "../../../assets/images/icon/03.png";
@@ -58,28 +22,9 @@ import icon4 from "../../../assets/images/icon/04.png";
 import icon5 from "../../../assets/images/icon/05.png";
 import icon6 from "../../../assets/images/icon/06.png";
 import icon7 from "../../../assets/images/icon/07.png";
-import g1 from "../../../assets/images/page-img/g1.jpg";
-import g2 from "../../../assets/images/page-img/g2.jpg";
-import g3 from "../../../assets/images/page-img/g3.jpg";
-import g4 from "../../../assets/images/page-img/g4.jpg";
-import g5 from "../../../assets/images/page-img/g5.jpg";
-import g6 from "../../../assets/images/page-img/g6.jpg";
-import g7 from "../../../assets/images/page-img/g7.jpg";
-import g8 from "../../../assets/images/page-img/g8.jpg";
-import g9 from "../../../assets/images/page-img/g9.jpg";
-import loader from "../../../assets/images/page-img/page-load-loader.gif";
-import small07 from "../../../assets/images/small/07.png";
-import small08 from "../../../assets/images/small/08.png";
-import small09 from "../../../assets/images/small/09.png";
-import small1 from "../../../assets/images/small/07.png";
-import small2 from "../../../assets/images/small/08.png";
-import small3 from "../../../assets/images/small/09.png";
-import small4 from "../../../assets/images/small/10.png";
-import small5 from "../../../assets/images/small/11.png";
-import small6 from "../../../assets/images/small/12.png";
-import small7 from "../../../assets/images/small/13.png";
-import small8 from "../../../assets/images/small/14.png";
-import user9 from "../../../assets/images/user/1.jpg";
+import img5 from "../../../assets/images/icon/10.png";
+import img10 from "../../../assets/images/page-img/06.jpg";
+import img9 from "../../../assets/images/page-img/07.jpg";
 import img51 from "../../../assets/images/page-img/51.jpg";
 import img52 from "../../../assets/images/page-img/52.jpg";
 import img53 from "../../../assets/images/page-img/53.jpg";
@@ -92,9 +37,45 @@ import img59 from "../../../assets/images/page-img/59.jpg";
 import img60 from "../../../assets/images/page-img/60.jpg";
 import img61 from "../../../assets/images/page-img/61.jpg";
 import img62 from "../../../assets/images/page-img/62.jpg";
+import img63 from "../../../assets/images/page-img/63.jpg";
 import img64 from "../../../assets/images/page-img/64.jpg";
 import img65 from "../../../assets/images/page-img/65.jpg";
-import img63 from "../../../assets/images/page-img/63.jpg";
+import g1 from "../../../assets/images/page-img/g1.jpg";
+import g2 from "../../../assets/images/page-img/g2.jpg";
+import g3 from "../../../assets/images/page-img/g3.jpg";
+import g4 from "../../../assets/images/page-img/g4.jpg";
+import g5 from "../../../assets/images/page-img/g5.jpg";
+import g6 from "../../../assets/images/page-img/g6.jpg";
+import g7 from "../../../assets/images/page-img/g7.jpg";
+import g8 from "../../../assets/images/page-img/g8.jpg";
+import g9 from "../../../assets/images/page-img/g9.jpg";
+import p1 from "../../../assets/images/page-img/p1.jpg";
+import p3 from "../../../assets/images/page-img/p3.jpg";
+import loader from "../../../assets/images/page-img/page-load-loader.gif";
+import img1 from "../../../assets/images/page-img/profile-bg1.jpg";
+import { default as small07, default as small1 } from "../../../assets/images/small/07.png";
+import { default as small08, default as small2 } from "../../../assets/images/small/08.png";
+import { default as small09, default as small3 } from "../../../assets/images/small/09.png";
+import small4 from "../../../assets/images/small/10.png";
+import small5 from "../../../assets/images/small/11.png";
+import small6 from "../../../assets/images/small/12.png";
+import small7 from "../../../assets/images/small/13.png";
+import small8 from "../../../assets/images/small/14.png";
+import user01 from "../../../assets/images/user/01.jpg";
+import user02 from "../../../assets/images/user/02.jpg";
+import user03 from "../../../assets/images/user/03.jpg";
+import user05 from "../../../assets/images/user/05.jpg";
+import user06 from "../../../assets/images/user/06.jpg";
+import user07 from "../../../assets/images/user/07.jpg";
+import user08 from "../../../assets/images/user/08.jpg";
+import user09 from "../../../assets/images/user/09.jpg";
+import { default as user1, default as user9 } from "../../../assets/images/user/1.jpg";
+import user10 from "../../../assets/images/user/10.jpg";
+import user15 from "../../../assets/images/user/15.jpg";
+import user16 from "../../../assets/images/user/16.jpg";
+import user17 from "../../../assets/images/user/17.jpg";
+import user18 from "../../../assets/images/user/18.jpg";
+import user19 from "../../../assets/images/user/19.jpg";
 
 const UserProfile = () => {
   const [show, setShow] = useState(false);

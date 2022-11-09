@@ -5,9 +5,6 @@ let updateInfo = [
   check("userName", transValidation.update_userName)
     .optional()
     .isLength({ min: 3, max: 20 }),
-  check("address", transValidation.update_address)
-    .optional()
-    .isLength({ min: 3, max: 300 }),
 ];
 
 let updatePassword = [

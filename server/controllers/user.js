@@ -48,6 +48,7 @@ let updatePassword = async (req, res) => {
 
   try {
     let updateUserItem = req.body;
+    console.log(updateUserItem);
     await user.updatePassword(req.user._id, updateUserItem);
 
     let result = {
@@ -136,6 +137,7 @@ let updateAvatar = (req, res) => {
 
       return res.status(200).send(result);
     } catch (error) {
+      console.log(error)
       return res.status(500).send(error);
     }
   });

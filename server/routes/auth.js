@@ -22,7 +22,11 @@ router
   .post(authValid.resetPassword, auth.resetPassword);
 router.route("/refresh-token").post(auth.refreshToken);
 
-router.route("/2FA").get(AuthMiddleware.isAuth, auth.get2FA);
+router
+  .route("/2FA")
+  .get(AuthMiddleware.isAuth, auth.get2FA)
+  .post(AuthMiddleware.isAuth, auth.toggle2FA);
+
 // Trang bật tính năng bảo mật 2 lớp
 router.route("/enable-2fa").get(AuthMiddleware.isAuth, auth.postEnable2FA);
 // Trang yêu cầu xác thực 2 lớp

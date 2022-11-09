@@ -63,7 +63,11 @@ const userReducer = (state = initialState, { type, payload }) =>
         break;
       case constants.USER_UPDATE_SUCCESS:
         draft.saveLoading = false;
-        draft.current = payload;
+        draft.current = { ...draft.current, payload };
+        break;
+      case constants.USER_UPDATE_AVATAR:
+        draft.saveLoading = false;
+        draft.current.avatar = payload;
         break;
       case constantsContact.CONTACT_CREATE_SUCCESS:
         draft.users.forEach((user) => {

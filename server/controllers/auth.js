@@ -311,6 +311,28 @@ let get2FA = async (req, res) => {
   return res.status(200).json(user);
 };
 
+let toggle2FA = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.user._id);
+    const enable2FA = {
+      enable2FA: !user.enable2FA,
+      verify2FA: true,
+    };
+    await user.updateOne(enable2FA);
+
+    const serviceName = "mqsocial.com";
+    // Thực hiện tạo mã OTP
+    const otpAuth = generateOTPToken(user.userName, serviceName, user.secretKey);
+
+    const QRCodeImage = await generateQRCode(otpAuth);
+
+    return res.status(200).json({ status: !user.enable2FA, QRCodeImage });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -321,4 +343,5 @@ module.exports = {
   postEnable2FA,
   postVerify2FA,
   get2FA,
+  toggle2FA
 };

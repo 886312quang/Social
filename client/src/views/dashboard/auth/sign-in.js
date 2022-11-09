@@ -129,6 +129,8 @@ const SignIn = () => {
       setField("email", email);
     }
   }, []);
+  console.log(errors)
+
 
   return (
     <>

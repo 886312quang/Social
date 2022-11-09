@@ -9,6 +9,7 @@ import {
   getVerify2FA,
   postEnable2FA,
   postVerify2FA,
+  toggle2FA
 } from "../../services/auth";
 import Errors from "../../helpers/errors";
 import notify from "../../components/notifications/notifications";
@@ -256,6 +257,28 @@ const actions = {
         type: constants.POST_VERIFY_2FA_ERROR,
         payload: Errors.selectMessage(error),
       });
+    }
+  },
+  toggle2FA: () => async (dispatch) => {
+    try {
+      let response = await toggle2FA();
+
+      if (response.data.status) {
+        dispatch({
+          type: constants.TOGGLE_2FA,
+          payload: response.data,
+        });
+
+        dispatch({
+          type: constants.ENABLE_2FA_SUCCESS,
+          payload: response.data.QRCodeImage,
+        });
+        notify.success("Enable 2FA successfull!");
+      } else {
+        notify.success("Disable 2FA successfull!");
+      }
+    } catch (error) {
+      notify.error(error.response.data.message);
     }
   },
 };

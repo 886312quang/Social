@@ -61,3 +61,8 @@ export const postVerify2FA = async (data) => {
   const response = await api.post("/auth/verify-2fa", data);
   return response;
 };
+
+export const toggle2FA = async () => {
+  const response = await api.post("/auth/2FA");
+  return response;
+};

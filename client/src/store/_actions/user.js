@@ -96,12 +96,17 @@ const actions = {
         },
       }).then((result) => {
         window.localStorage.removeItem("asauth");
+        window.localStorage.removeItem("accessToken");
+        window.localStorage.removeItem("refresh-token");
+        window.localStorage.removeItem("exp");
+        window.localStorage.removeItem("iat");
         socketDisconnect();
-        getHistory().push("/signin");
+    
+        getHistory().push("/auth/sign-in");
         dispatch({ type: "RESET" });
       });
     } catch (error) {
-      notify.error("Change password fail!");
+      notify.error("Vui lòng kiểm tra lại thông tin!");
       dispatch({
         type: constants.USER_UPDATE_PASSWORD_ERROR,
       });

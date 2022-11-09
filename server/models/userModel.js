@@ -9,6 +9,8 @@ let UserSchema = new Schema({
   userName: String,
   gender: { type: String, default: "male" },
   phone: { type: String, default: null },
+  address: { type: String, default: null },
+  birth: { type: String, default: null },
   avatar: { type: String, default: "avatar-default.jpg" },
   coverPic: { type: String, default: "avatar-default.jpg" },
   role: { type: String, default: "user" },
@@ -18,7 +20,6 @@ let UserSchema = new Schema({
   about: {
     job: { type: String, default: null },
     education: { type: String, default: null },
-    address: { type: String, default: null },
     marriage: { type: String, default: null },
   },
   local: {
@@ -170,6 +171,7 @@ UserSchema.statics = {
       about: 1,
       gender: 1,
       address: 1,
+      birth: 1,
       local: { email: 1 },
     }).exec();
   },

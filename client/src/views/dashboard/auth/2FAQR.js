@@ -1,30 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Row, Col, Container, Image, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import userActions from "../../../store/_actions/user";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import notify from "../../../components/notifications/notifications";
 import authActions from "../../../store/_actions/auth";
 import selectors from "../../../store/_selectors/auth";
 import userSelectors from "../../../store/_selectors/user";
-import * as constants from "../../../constants/auth";
-import { useDispatch, useSelector } from "react-redux";
-import * as ReactDOM from "react-dom";
-import notify from "../../../components/notifications/notifications";
 
 //swiper
+import SwiperCore, { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Autoplay } from "swiper";
 
 // Import Swiper styles
-import "swiper/swiper-bundle.min.css";
 import "swiper/components/navigation/navigation.scss";
+import "swiper/swiper-bundle.min.css";
 
 //image
-import mail from "../../../assets/images/login/mail.png";
-import logo from "../../../assets/images/logo-full.png";
 import login1 from "../../../assets/images/login/1.png";
 import login2 from "../../../assets/images/login/2.png";
 import login3 from "../../../assets/images/login/3.png";
+import logo from "../../../assets/images/logo-full.png";
 
 // install Swiper modules
 SwiperCore.use([Navigation, Autoplay]);
@@ -148,15 +143,6 @@ const FAQR = () => {
             <Col md="6" className="bg-white pt-5 pt-5 pb-lg-0 pb-5">
               <div className="sign-in-from">
                 <h1 className="mt-3 mb-0">2FA Authentication</h1>
-                <div className="card-header d-flex justify-content-center">
-                  <Image
-                    src={qrcode}
-                    width="160"
-                    alt=""
-                    className="card-title"
-                  />
-                </div>
-                
                 <Form.Group className="form-group mt-3">
                   <Form.Label htmlFor="validationTooltipEmail">
                     2FA TOKEN
